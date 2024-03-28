@@ -1,97 +1,112 @@
--- Used "eternal_winter.lua" as a base it uses the same sprites needed in Q5.
+--[[
+-- Question5.lua.
+-- Uses the sprite from Eternal Winter to create a custom ice tornado pattern
+-- We do this by setting up four spell mappings and mapping those to combat objects
+-- From there we stagger the execution of each combat object with AddEvent creating the pattern in the video.
+-- This spell only handles the animation and does not do any dmg.
+--]]
 
+--In line frames 
+local altFrame1 = {
+	{0,0,1,0,0,0,0,0,0},
+	--below pc
+	{0,1,0,0,2,0,0,1,0},
+	--above pc
+	{0,0,1,0,0,0,0,0,0},
+	{0,0,0,1,0,0,0,0,0},
+	{0,0,0,0,1,0,0,0,0},
+}
+local altFrame2 = {
+	{0,0,0,1,0,1,0,0,0},
+	{0,0,0,0,0,0,1,0,0},
+	{0,0,0,0,2,0,0,0,0},
+        {0,0,0,0,1,0,1,0,0}
+}
 
-local Frame1 = {
+local altFrame3 = {
+	{0,0,0,1,2,1,0,0,0},
+	{0,0,0,0,0,0,0,0,0},
+	{0,0,0,0,0,1,0,0,0}
+}
+local altFrame4 = {
+	{0,0,0,0,1,0,0,0,0},
+	{0,0,0,0,0,0,0,0,0},
+	{0,0,0,0,1,0,0,0,0},
+	{0,0,0,0,2,0,0,0,0}
+}
+--[[
+-- I encountered the following bug with the Ice Tornado Animation:
+-- https://otland.net/threads/issue-on-the-animation-of-eternal-winter.281595/
+-- Because of this I could not reproduce the animation exactly. I could only get Large Ice Tornados to show up even tiles away from me, when in the animation the Large Ice Tornados show on odd tiles away from PC.
+-- If I created a map that was the same position as in the animation no torandos would show up. 
+-- In order to get the tornados to appear I had to shift the pattern.
+--
+-- Assume the player faces south
+-- All tornados aligned with the player are shifted left by one tile from the original pattern.
+-- All tornados to the left of the player are shifted left by one tile from the original pattern.
+-- All tornados to the right of the player are shifted right by one tile from the original pattern.
+-- For convience I provided the "correct" frames under the name altFrame
+--]]
+
+--Shifted Frames 
+local frame1 = {
 	{0,1,0,0,0,0,0,0,0},
-	--below mc
+	--below pc
 	{1,0,0,0,2,0,0,0,1},
-	--above mc
+	--above pc
 	{0,1,0,0,0,0,0,0,0},
 	{0,0,1,0,0,0,0,0,0},
 	{0,0,0,1,0,0,0,0,0},
 }
-local Frame2 = {
+local frame2 = {
 	{0,0,1,0,0,0,1,0,0},
 	{0,0,0,0,0,0,0,1,0},
 	{0,0,0,0,2,0,0,0,0},
         {0,0,0,0,0,1,0,1,0}
 }
 
-local Frame3 = {
+local frame3 = {
 	{0,0,1,0,2,0,1,0,0},
 	{0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,0,1,0,0}
 }
-local Frame4 = {
+local frame4 = {
 	{0,0,0,0,0,1,0,0,0},
 	{0,0,0,0,0,0,0,0,0},
 	{0,0,0,0,0,1,0,0,0},
 	{0,0,0,0,2,0,0,0,0}
 }
-combat1 = Combat()
-combat1:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat1:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-combat1:setArea(createCombatArea(Frame1))
 
-combat2 = Combat()
-combat2:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat2:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-combat2:setArea(createCombatArea(Frame2))
+-- Create two parallel arrays to setup the combat object.
 
-combat3 = Combat()
-combat3:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat3:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-combat3:setArea(createCombatArea(Frame3))
+-- Change these to altFrame for the original pattern.
+-- https://otland.net/threads/issue-on-the-animation-of-eternal-winter.281595/
+frameArr = { frame1, frame2, frame3, frame4 }
+combatArr = { Combat(), Combat(), Combat(), Combat() }
 
-
-combat4 = Combat()
-combat4:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
-combat4:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
-combat4:setArea(createCombatArea(Frame4))
-
-function onGetFormulaValues1(player, level, magicLevel)
-	return -1, -1
+-- The only differences between combat objects is what frame they display.
+for i = 1,4 do
+    combatArr[i]:setParameter(COMBAT_PARAM_TYPE, COMBAT_ICEDAMAGE)
+    combatArr[i]:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ICETORNADO)
+    --Ensure that each combat object is set to the correct frame.
+    combatArr[i]:setArea(createCombatArea(frameArr[i]))
 end
-
-function onGetFormulaValues2(player, level, magicLevel)
-	return -1, -1
-end
-
-function onGetFormulaValues3(player, level, magicLevel)
-	return -1, -1
-end
-
-function onGetFormulaValues4(player, level, magicLevel)
-	return -1, -1
-end
-combat1:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues1")
-combat2:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues2")
-combat3:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues3")
-combat4:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues4")
 
 local function castSpell(creatureId, variant, combat_idx)
 	local creature = Creature(creatureId)
 	if not creature then
 		return
 	end
-        if combat_idx == 1 then
-		combat1:execute(creature, variant)
-	elseif combat_idx == 2 then
-		combat2:execute(creature, variant)
-	elseif combat_idx == 3 then
-		combat3:execute(creature, variant)
-	elseif combat_idx == 4 then
-		combat4:execute(creature, variant)
-	end
+	combatArr[combat_idx]:execute(creature, variant)
 end
 
 function onCastSpell(creature, variant)
-	--local variant_id = variant:getId()
-	--TODO LOOP?
+	-- I could put this in a loop, however I think it would make the code more confusing.
         castSpell(creature, variant, 1)
         addEvent(castSpell, 100, creature:getId(), variant, 2)
 	addEvent(castSpell, 250, creature:getId(), variant, 3)
 	addEvent(castSpell, 750, creature:getId(), variant, 4)
+	--Per the video this should be enough time that the small tornado desppawns, but not enough time for the big tornado to despawn
 	addEvent(castSpell, 1000, creature:getId(), variant, 1)
         addEvent(castSpell, 1250, creature:getId(), variant, 2)
 	addEvent(castSpell, 1250, creature:getId(), variant, 3)
