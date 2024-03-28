@@ -1,0 +1,10 @@
+Module
+  name: game_question7
+  description: Implmentation of Tavernlight games Question 7
+  author: Williams, Zak 
+  website: https://github.com/aksealman/TavernlightGamesTrial
+  sandboxed: true
+  scripts: [ question7 ]
+  autoload: true
+  @onLoad: init()
+  @onUnload: terminate()

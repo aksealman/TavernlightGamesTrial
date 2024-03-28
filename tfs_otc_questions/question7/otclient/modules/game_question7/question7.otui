@@ -1,0 +1,10 @@
+MainWindow
+  id: question7Window
+  size: 300 350 
+
+  Button
+    id: jumpButton
+    !text: tr('Jump!')
+    width: 48 
+    height: 24 
+    @onClick: buttonToggle()

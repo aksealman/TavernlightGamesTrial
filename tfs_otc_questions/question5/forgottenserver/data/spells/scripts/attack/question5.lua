@@ -86,30 +86,17 @@ local function castSpell(creatureId, variant, combat_idx)
 end
 
 function onCastSpell(creature, variant)
-	--[[local player = Player(creature)
-	if player == nil then
-		return False
-	end
-        playerPos = player:getPosition()
-	playerPos:sendMagicEffect(CONST_ME_ICETORNADO)
-	print(playerPos.stackpos)
-	playerPos.x = playerPos.x + 1 
-	playerPos:sendMagicEffect(CONST_ME_ICETORNADO)
-	playerPos.x = playerPos.x - 2 
-	playerPos:sendMagicEffect(CONST_ME_ICETORNADO)
-	]]--
 	--local variant_id = variant:getId()
+	--TODO LOOP?
         castSpell(creature, variant, 1)
         addEvent(castSpell, 100, creature:getId(), variant, 2)
 	addEvent(castSpell, 250, creature:getId(), variant, 3)
 	addEvent(castSpell, 750, creature:getId(), variant, 4)
 	addEvent(castSpell, 1000, creature:getId(), variant, 1)
-        --addEvent(castSpell, 1100, creature:getId(), variant, 2)
         addEvent(castSpell, 1250, creature:getId(), variant, 2)
 	addEvent(castSpell, 1250, creature:getId(), variant, 3)
 	addEvent(castSpell, 1750, creature:getId(), variant, 4)
 	addEvent(castSpell, 2000, creature:getId(), variant, 1)
-        --addEvent(castSpell, 2100, creature:getId(), variant, 2)
         addEvent(castSpell, 2250, creature:getId(), variant, 2)
 	addEvent(castSpell, 2250, creature:getId(), variant, 3)
 	addEvent(castSpell, 2750, creature:getId(), variant, 4)
