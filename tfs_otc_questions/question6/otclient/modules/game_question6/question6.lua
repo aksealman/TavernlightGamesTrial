@@ -1,36 +1,26 @@
-function online()
-end
-
-function offline()
-end
-
+--[[
+-- Question6.lua
+--
+-- Client side dash effect. Invoked via Ctrl+D
+--
+-- This is an incomplete implemntation of question 6. 
+--
+-- The script currently dashes 6 tiles in the direction the character is facing
+-- Trees will stop the player, however creatures will not.
+-- It does NOT implment the shader, nor does it communicate to the server to update the player position.
+--
+--]]
 function init()
-  connect(g_game, { onGameStart = online,
-                    onGameEnd   = offline })
-  --bind hotkey
   g_keyboard.bindKeyDown("Ctrl+D", playerDash)
-  if g_game.isOnline() then
-    online()
-  end
 end
 
 function terminate()
-  disconnect(g_game, { onGameStart = online,
-                       onGameEnd   = offline })
   g_keyboard.unbindKeyDown("Ctrl+D")
 end
 
 
 function playerDash()
-	--player:setPosition(pos)
-	--g_map.setCentralPosition(pos)
-	--g_map.removeThingByPos(curr_pos)
-	--g_game.walk(2, false)
-	--North 0
-	--East 1 
-	--South 2
-	--West 3
-        --p_direction = g_game.getLocalPlayer():getDirection()
+	-- TODO glsl shader to produce effect?
 	shader = g_shaders.createShader("test")
 	dashOnce()
         scheduleEvent(dashOnce, 50)
@@ -38,22 +28,11 @@ function playerDash()
         scheduleEvent(dashOnce, 150)
         scheduleEvent(dashOnce, 200)
         scheduleEvent(dashOnce, 250)
-        --scheduleEvent(dashOnce, 300)
-        --scheduleEvent(dashOnce, 350)
-        --scheduleEvent(dashOnce, 400)
-        --scheduleEvent(dashOnce, 450)
-        --scheduleEvent(dashOnce, 500)
-	--g_map.removeThing(player)
-	--g_map.setCentralPosition(tele_map_pos)
-	--g_map.notificateTileUpdate(tele_pos)
-	print("PlayerDash: GOODBYE WORLD")
 end
-function dashOnce(direction)
+function dashOnce()
 	player = g_game.getLocalPlayer()
 	curr_pos = player:getPosition()
 	direction = player:getDirection()
-	--g_map.removeThing(player)
-	--north
         if direction == 0 then
 	    curr_pos.y = curr_pos.y - 1
         --east
@@ -66,27 +45,20 @@ function dashOnce(direction)
 	elseif direction == 3 then
 	    curr_pos.x = curr_pos.x - 1
 	else
-		print ("boo")
 		return
 	end
 	--Check if tile at curr_pos has anything that would block movement
-	--ex tree
-	--g_map.setShowAnimations(false)
-	g_map.beginGhostMode()
 	tele_tile = g_map.getTile(curr_pos)
 
 	-- Don't teleport across trees/walls/pools.
 	-- Allow for teleport across creatures.
 	if not tele_tile:isWalkable() and not tele_tile:hasCreature() then
-		print("Object blocking")
 		return
 	end
-	--g_game.walk(direction, false)
+	-- This is an incomplete way to move the player.
+	-- Doing this desyncronizes the client from the server.
+	-- We would need to communicate to the server the new player location.
 	g_map.removeThing(player)
 	g_map.addThing(player, curr_pos, -1)
-
-	--g_map.notificateTileUpdate(tele_pos)
-	--g_map.removeThingByPos(curr_pos)
-	--g_game.walk(2, false)
 end
 
