@@ -7,4 +7,4 @@ MainWindow
     !text: tr('Jump!')
     width: 48 
     height: 24 
-    @onClick: buttonToggle()
+    @onClick: moveJumpButtonLevel()

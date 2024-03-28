@@ -106,7 +106,7 @@ function onCastSpell(creature, variant)
         addEvent(castSpell, 100, creature:getId(), variant, 2)
 	addEvent(castSpell, 250, creature:getId(), variant, 3)
 	addEvent(castSpell, 750, creature:getId(), variant, 4)
-	--Per the video this should be enough time that the small tornado desppawns, but not enough time for the big tornado to despawn
+	-- Per the video this should be enough time that the small tornado desppawns, but not enough time for the big tornado to despawn
 	addEvent(castSpell, 1000, creature:getId(), variant, 1)
         addEvent(castSpell, 1250, creature:getId(), variant, 2)
 	addEvent(castSpell, 1250, creature:getId(), variant, 3)
