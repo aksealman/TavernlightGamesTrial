@@ -5,7 +5,7 @@
 --
 -- The problem with this function is that we are not validing that we are being passed a valid playerId or membername,
 -- The function also does not validate if either player is in the party.
--- Finally we also check if both the player and the member are in a party. If eirther are not, save the load of looping through the party.
+-- Finally we also check if both the player and the member are in a party. If eirther are not, don't bother looping through the party.
 --]]
 
 
