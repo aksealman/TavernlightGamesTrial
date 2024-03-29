@@ -9,9 +9,10 @@
  *
  * The way I decided to solve is to create a newPlayerWrapper class with the constructor allocating the memory and the destructor cleaning the memory up.
  * This means that if we user the wrapper the player object will be freed whenever the newPlayerWrapper class goes out of scope.
+ * One downside of this method is that we are calling new every time we call the addItemToPlayer function where before we would only allocate the memory if the g_game.getPlayerByName call failed.
  */
 class newPlayerWrapper{
-	Player * player;
+	Player* player;
 public:
 	newPlayerWrapper()
 	{
@@ -30,10 +31,10 @@ void Game::addItemToPlayer(const std::string& recipient, uint16_t itemId)
 {
     Player* player = g_game.getPlayerByName(recipient);
     // This will de-allocate the memory when playerWrapper goes out of scope
-    newPlayerWrapper playerWrapper();
+    newPlayerWrapper playerWrapper;
     if (!player) {
 	// This will de-allocate the memory when playerWrapper goes out of scope
-        player = playerWrapper.getPlayerPtr()
+        player = playerWrapper.getPlayerPtr();
         if (!IOLoginData::loadPlayerByName(player, recipient)) {
 	    // We are unable to load the recipient into the player object.
 	    // Delete the player object
