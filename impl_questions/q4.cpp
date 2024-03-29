@@ -8,7 +8,7 @@
  * We are creating a new player object without calling delete on that object.
  *
  * The way I decided to solve is to create a newPlayerWrapper class with the constructor allocating the memory and the destructor cleaning the memory up.
- * This means that if we user the wrapper the player object will be freed whenever the newPlayerWrapper class goes out of scope.
+ * If we use the wrapper, the player object will be freed whenever the newPlayerWrapper class goes out of scope.
  * One downside of this method is that we are calling new every time we call the addItemToPlayer function where before we would only allocate the memory if the g_game.getPlayerByName call failed.
  */
 class newPlayerWrapper{

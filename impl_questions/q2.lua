@@ -1,6 +1,6 @@
 --[[
 -- q3.lua
--- The issue with this script is that it looks like we should explect multiple guild names from the selectGuidQuery. However the function will only print one guild name no matter how many guilds have less then maxMembers
+-- The issue with this script is that it looks like we should expect multiple guild names from the selectGuidQuery query. The function will only print one guild name no matter how many guilds have less then maxMembers.
 --
 --I observed the result data structure in the forgotten server (line 4061 in src/luascript.cpp).
 --

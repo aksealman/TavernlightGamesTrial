@@ -45,7 +45,7 @@ local altFrame4 = {
 -- All tornados aligned with the player are shifted left by one tile from the original pattern.
 -- All tornados to the left of the player are shifted left by one tile from the original pattern.
 -- All tornados to the right of the player are shifted right by one tile from the original pattern.
--- For convience I provided the "correct" frames under the name altFrame
+-- For convience I provided the "correct" frames above using the name altFrame.
 --]]
 
 --Shifted Frames 

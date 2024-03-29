@@ -3,9 +3,9 @@
 --
 -- This function removes membername from playerId's party
 --
--- The problem with this function is that we are not validing that we are being passed a valid playerId or membername,
+-- The problem with this function is that we are not validing that we are being passed a valid playerId or membername.
 -- The function also does not validate if either player is in the party.
--- Finally we also check if both the player and the member are in a party. If eirther are not, don't bother looping through the party.
+-- In addition to fixing the above I also check if both the player and the member are in a party. If eirther are not, don't bother looping through the party.
 --]]
 
 
@@ -22,7 +22,7 @@
 --]]
 function removeMemberFromPlayerParty(playerId, memberName)
     local player = Player(playerId)
-    -- Decalre member up here so we do not have multiple Player construction calls.
+    -- Declare member up here so we do not have multiple Player construction calls.
     local member = Player(memberName)
 
     -- Check if player/member is valid
@@ -37,7 +37,7 @@ function removeMemberFromPlayerParty(playerId, memberName)
     if not member_party or not player_party then
 	return
     end
-    --Loop through the players party
+    -- Loop through the players party
     -- Depending on the implmentation of removeMember we may not need to loop through the members.
     for k, v in pairs(player_party:getMembers()) do
 	if v == member then

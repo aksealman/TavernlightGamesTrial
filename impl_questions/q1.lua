@@ -1,7 +1,7 @@
 --[[
 --q1.lua
 --
--- The problem with the provided function is that there is no guarntee the player object will be availble when the releaseStorage event triggers.
+-- The problem with the provided function is that there is no guarantee the player object will be available when the releaseStorage event triggers.
 --
 -- Instead of passing the player object we can pass the playerID and try to construct the player object in the releaseStorage function
 --]]
