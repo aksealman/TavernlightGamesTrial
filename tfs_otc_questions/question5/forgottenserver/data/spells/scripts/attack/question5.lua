@@ -81,8 +81,8 @@ local frame4 = {
 
 -- Change these to altFrame for the original pattern.
 -- https://otland.net/threads/issue-on-the-animation-of-eternal-winter.281595/
-frameArr = { frame1, frame2, frame3, frame4 }
-combatArr = { Combat(), Combat(), Combat(), Combat() }
+local frameArr = { frame1, frame2, frame3, frame4 }
+local combatArr = { Combat(), Combat(), Combat(), Combat() }
 
 -- The only differences between combat objects is what frame they display.
 for i = 1,4 do

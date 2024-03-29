@@ -11,26 +11,26 @@
 --]]
 
 
-WINDOW_WIDTH = 300 
-WINDOW_HEIGHT = 350 
-BUTTON_HEIGHT = 24
+local WINDOW_WIDTH = 300 
+local WINDOW_HEIGHT = 350 
+local BUTTON_HEIGHT = 24
 
 
 -- The Three levels the button jumps between.
-BOTTOM_OFFSET = 0
-MIDDLE_OFFSET = 100
-TOP_OFFSET = 200
+local BOTTOM_OFFSET = 0
+local MIDDLE_OFFSET = 100
+local TOP_OFFSET = 200
 
 
 -- Without these offsets the button would start outside of our window.
-Y_AXIS_OFFSET = WINDOW_HEIGHT - 100
-X_AXIS_OFFSET = WINDOW_WIDTH - 100
+local Y_AXIS_OFFSET = WINDOW_HEIGHT - 100
+local X_AXIS_OFFSET = WINDOW_WIDTH - 100
 
 -- We need to save our init pos as we will return to some function of it when the button is clicked.
-init_pos = nil
+local init_pos = nil
 
 -- We start at the bottom so the next level would be the middle.
-jumpPattern_idx = 1 
+local jumpPattern_idx = 1 
 
 function init()
 
@@ -56,7 +56,7 @@ function terminate()
 end
 
 function moveLoop()
-    x_cord = jumpButton:getX()
+    local x_cord = jumpButton:getX()
     -- If our window is hidden don't bother moving the button.
     if question7Window:isHidden() then
 	    return
@@ -93,10 +93,10 @@ function moveJumpButtonLevel()
     -- If I want to use modulo areithmitic for the box jump pattern
     -- then we want to use jumpPattern_idx % 4
     -- Which gives us a value between 0-3
-    jumpPattern = {MIDDLE_OFFSET, BOTTOM_OFFSET, TOP_OFFSET}
+    local jumpPattern = {MIDDLE_OFFSET, BOTTOM_OFFSET, TOP_OFFSET}
     jumpPattern[0] = BOTTOM_OFFSET
 
-    curr_pos = jumpButton:getPosition()
+    local curr_pos = jumpButton:getPosition()
     -- Use our init pos to determine where we jump to.
     curr_pos.x = init_pos.x
     curr_pos.y = init_pos.y - jumpPattern[jumpPattern_idx%4]

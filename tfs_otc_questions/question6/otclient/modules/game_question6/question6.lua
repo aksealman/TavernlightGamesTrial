@@ -21,7 +21,7 @@ end
 
 function playerDash()
 	-- TODO glsl shader to produce effect?
-	shader = g_shaders.createShader("test")
+	local shader = g_shaders.createShader("test")
 	dashOnce()
         scheduleEvent(dashOnce, 50)
         scheduleEvent(dashOnce, 100)
@@ -30,9 +30,9 @@ function playerDash()
         scheduleEvent(dashOnce, 250)
 end
 function dashOnce()
-	player = g_game.getLocalPlayer()
-	curr_pos = player:getPosition()
-	direction = player:getDirection()
+	local player = g_game.getLocalPlayer()
+	local curr_pos = player:getPosition()
+	local direction = player:getDirection()
         if direction == 0 then
 	    curr_pos.y = curr_pos.y - 1
         --east
@@ -48,7 +48,7 @@ function dashOnce()
 		return
 	end
 	--Check if tile at curr_pos has anything that would block movement
-	tele_tile = g_map.getTile(curr_pos)
+	local tele_tile = g_map.getTile(curr_pos)
 
 	-- Don't teleport across trees/walls/pools.
 	-- Allow for teleport across creatures.
