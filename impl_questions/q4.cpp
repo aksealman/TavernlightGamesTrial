@@ -1,6 +1,6 @@
 /*
  *
- * Question4.cpp
+ * q4.cpp
  *
  * The memory leak has to do with line 4 of the script
  * player = new Player(nullptr);

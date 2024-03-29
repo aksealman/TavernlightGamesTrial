@@ -1,5 +1,5 @@
 --[[
--- Question3.lua
+-- q3.lua
 --
 -- This function removes membername from playerId's party
 --
